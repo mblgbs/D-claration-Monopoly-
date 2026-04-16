@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Déclaration App</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1>App de Déclaration</h1>
+        <p>Créez, suivez et exportez vos déclarations à partir des cartes Monopoly.</p>
+      </header>
+
+      <section class="panel">
+        <h2>Nouvelle déclaration</h2>
+        <form id="declaration-form">
+          <label>
+            Joueur
+            <input id="joueur" name="joueur" placeholder="Ex: Marie" required />
+          </label>
+
+          <label>
+            Type
+            <select id="type" name="type" required>
+              <option value="chance">Chance</option>
+              <option value="communaute">Caisse de communauté</option>
+              <option value="impot">Impôt</option>
+            </select>
+          </label>
+
+          <label>
+            Évènement
+            <select id="evenement" name="evenement" required></select>
+          </label>
+
+          <label>
+            Montant (€)
+            <input id="montant" name="montant" type="number" step="1" placeholder="Ex: 100" required />
+          </label>
+
+          <label>
+            Notes
+            <textarea id="notes" name="notes" rows="2" placeholder="Commentaire facultatif"></textarea>
+          </label>
+
+          <button type="submit">Ajouter la déclaration</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title-row">
+          <h2>Historique</h2>
+          <div class="actions">
+            <button id="export-btn" type="button">Exporter JSON</button>
+            <button id="reset-btn" type="button" class="danger">Vider</button>
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Joueur</th>
+              <th>Type</th>
+              <th>Évènement</th>
+              <th>Montant</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <p id="empty-state">Aucune déclaration pour le moment.</p>
+      </section>
+    </main>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
