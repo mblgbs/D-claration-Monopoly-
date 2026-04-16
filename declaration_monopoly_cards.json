@@ -1,0 +1,56 @@
+{
+  "theme": "Déclaration",
+  "currency": "€",
+  "chance": [
+    "Avancez jusqu'à la case Départ.",
+    "Avancez à Hôtel de Ville.",
+    "Avancez à Gare Centrale. Si vous passez par Départ, recevez 200€.",
+    "Rendez-vous à la case Prison. Ne passez pas par Départ.",
+    "Reculez de 3 cases.",
+    "Banque vous verse un dividende de 50€.",
+    "Amende pour excès de vitesse : payez 15€.",
+    "Réparations de voirie : payez 40€ par maison et 115€ par hôtel.",
+    "Vous êtes élu président du conseil : payez 50€ à chaque joueur.",
+    "Vos investissements immobiliers rapportent 150€.",
+    "Frais médicaux imprévus : payez 100€.",
+    "Ouvrez une nouvelle filiale : avancez à Zone Industrielle.",
+    "Vous gagnez un concours d'innovation : recevez 100€.",
+    "Carte de sortie de prison gratuite. Conservez-la jusqu'à utilisation.",
+    "Avancez à Avenue des Arts.",
+    "Taxe exceptionnelle annulée : recevez 25€."
+  ],
+  "communaute": [
+    "Avancez jusqu'à la case Départ.",
+    "Erreur de la banque en votre faveur : recevez 200€.",
+    "Frais d'hospitalisation : payez 100€.",
+    "Remboursement d'assurance : recevez 50€.",
+    "C'est votre anniversaire : recevez 10€ de chaque joueur.",
+    "Honoraires de consultant : recevez 25€.",
+    "Payez la facture d'électricité : 50€.",
+    "Vous héritez de 100€.",
+    "Vente de stock réussie : recevez 75€.",
+    "Amende pour stationnement interdit : payez 15€.",
+    "Carte de sortie de prison gratuite. Conservez-la jusqu'à utilisation.",
+    "Allez en prison. Ne passez pas par Départ.",
+    "Revenus d'intérêts : recevez 20€.",
+    "Collecte locale en faveur de vos projets : recevez 45€.",
+    "Contribution à l'entretien urbain : payez 40€.",
+    "Retour d'impôt : recevez 20€."
+  ],
+  "impots": {
+    "impot_sur_le_revenu": {
+      "case": "Impôt sur le revenu",
+      "montant_fixe": 200,
+      "regle": "Le joueur paie 200€ lorsqu'il arrive sur cette case."
+    },
+    "taxe_de_luxe": {
+      "case": "Taxe de luxe",
+      "montant_fixe": 100,
+      "regle": "Le joueur paie 100€ lorsqu'il arrive sur cette case."
+    },
+    "option_variante": {
+      "description": "Variante possible pour Impôt sur le revenu",
+      "regle": "Le joueur peut payer 10% de sa valeur nette totale au lieu de 200€ avant de calculer ses loyers."
+    }
+  }
+}
