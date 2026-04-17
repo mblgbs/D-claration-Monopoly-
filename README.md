@@ -32,3 +32,20 @@ L'API sera disponible sur :
 curl http://127.0.0.1:8000/health
 curl http://127.0.0.1:8000/cards/chance/random
 ```
+
+## Authentification FranceConnect (MVP SSO)
+
+Cette API peut protéger toutes les routes métier via un token Bearer issu de `FranceConnect-Monopoly`.
+
+Variables d'environnement:
+
+- `SERVICE_AUTH_ENABLED=true`
+- `FRANCECONNECT_BASE_URL=http://127.0.0.1:8000`
+- `AUTH_REQUEST_TIMEOUT_SECONDS=2.5`
+
+Comportement:
+
+- `/health` et `/` restent publics
+- les routes `/cards*` et `/taxes` exigent `Authorization: Bearer <token>`
+- token invalide/manquant -> `401`
+- fournisseur d'auth indisponible -> `503`
