@@ -38,6 +38,11 @@
     "Retour d'impôt : recevez 20€."
   ],
   "impots": {
+    "impot_depart": {
+      "case": "DEPART",
+      "montant_fixe": 10,
+      "regle": "À chaque passage ou arrêt sur la case DEPART, payez à la Banque 5% de vos revenus (10€)."
+    },
     "impot_sur_le_revenu": {
       "case": "Impôt sur le revenu",
       "montant_fixe": 200,

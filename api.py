@@ -196,7 +196,7 @@ class MonopolyAPIHandler(BaseHTTPRequestHandler):
             joueur = str(payload.get("joueur", "")).strip()
             declaration_type = str(payload.get("type", "")).strip()
             evenement = str(payload.get("evenement", "")).strip()
-            montant = int(payload.get("montant", 0))
+            raw_montant = payload.get("montant", None)
             notes = str(payload.get("notes", "")).strip()
 
             if not joueur:
@@ -208,6 +208,14 @@ class MonopolyAPIHandler(BaseHTTPRequestHandler):
             if not evenement:
                 self._send_json({"error": "L'évènement est requis"}, status=HTTPStatus.BAD_REQUEST)
                 return
+            if raw_montant is None or str(raw_montant).strip() == "":
+                self._send_json({"error": "Le montant est requis"}, status=HTTPStatus.BAD_REQUEST)
+                return
+            if isinstance(raw_montant, bool):
+                self._send_json({"error": "Le montant est invalide"}, status=HTTPStatus.BAD_REQUEST)
+                return
+
+            montant = int(raw_montant)
 
             bank_account = self._apply_bank_movement(joueur, montant)
             operation = "retrait" if montant >= 0 else "depot"

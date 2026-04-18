@@ -52,6 +52,20 @@ function autoFillAmount() {
   const match = text.match(/(\d+)€/);
   if (match) {
     amountInput.value = Number.parseInt(match[1], 10);
+    return;
+  }
+
+  if (typeSelect.value === 'impot' && cardData?.impots) {
+    const selectedTax = Object.values(cardData.impots).find((item) => item.regle === text);
+
+    if (selectedTax && Number.isFinite(selectedTax.montant_fixe)) {
+      amountInput.value = selectedTax.montant_fixe;
+      return;
+    }
+  }
+
+  if (/5%\s+de\s+vos\s+revenus/i.test(text) && /DEPART/i.test(text)) {
+    amountInput.value = 10;
   }
 }
 
