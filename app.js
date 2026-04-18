@@ -9,6 +9,9 @@ const resetBtn = document.getElementById('reset-btn');
 let cardData;
 const STORAGE_KEY = 'declaration_app_entries';
 let entries = [];
+const API_BASE_URL = window.location.protocol.startsWith('http')
+  ? window.location.origin
+  : 'http://127.0.0.1:8000';
 
 const formatType = {
   chance: 'Chance',
@@ -79,13 +82,16 @@ function renderEntries() {
       <td>${entry.montant} €</td>
       <td>${entry.notes || '-'}</td>
     `;
+    if (typeof entry.solde === 'number') {
+      tr.title = `Opération banque: ${entry.operation || 'n/a'} | Solde actuel: ${entry.solde} M$`;
+    }
     rows.appendChild(tr);
   });
 
   emptyState.style.display = entries.length ? 'none' : 'block';
 }
 
-form.addEventListener('submit', (event) => {
+form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
   const data = new FormData(form);
@@ -98,11 +104,31 @@ form.addEventListener('submit', (event) => {
     notes: data.get('notes')?.toString().trim(),
   };
 
-  entries.unshift(entry);
-  saveEntries();
-  renderEntries();
-  form.reset();
-  fillEventOptions(typeSelect.value);
+  try {
+    const response = await fetch(`${API_BASE_URL}/declarations`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(entry),
+    });
+    const payload = await response.json();
+    if (!response.ok) {
+      throw new Error(payload.error || 'Erreur lors de l\'enregistrement.');
+    }
+
+    entries.unshift({
+      ...entry,
+      operation: payload.entry.operation,
+      solde: payload.bankAccount.solde,
+    });
+    saveEntries();
+    renderEntries();
+    form.reset();
+    fillEventOptions(typeSelect.value);
+  } catch (error) {
+    alert(error.message);
+  }
 });
 
 typeSelect.addEventListener('change', () => fillEventOptions(typeSelect.value));
