@@ -41,6 +41,8 @@ Variables d'environnement:
 
 - `SERVICE_AUTH_ENABLED=true`
 - `FRANCECONNECT_BASE_URL=http://127.0.0.1:8001`
+- `BANK_API_BASE_URL=http://127.0.0.1:8002`
+- `PORT=8003`
 - `AUTH_REQUEST_TIMEOUT_SECONDS=2.5`
 
 Comportement:

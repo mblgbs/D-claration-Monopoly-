@@ -11,7 +11,7 @@ const STORAGE_KEY = 'declaration_app_entries';
 let entries = [];
 const API_BASE_URL = window.location.protocol.startsWith('http')
   ? window.location.origin
-  : 'http://127.0.0.1:8003';
+  : 'http://127.0.0.1:8000';
 
 const formatType = {
   chance: 'Chance',
