@@ -18,9 +18,9 @@ with DATA_PATH.open("r", encoding="utf-8") as data_file:
 
 class MonopolyAPIHandler(BaseHTTPRequestHandler):
     auth_enabled = os.getenv("SERVICE_AUTH_ENABLED", "false").lower() == "true"
-    franceconnect_base_url = os.getenv("FRANCECONNECT_BASE_URL", "http://127.0.0.1:8000").rstrip("/")
+    franceconnect_base_url = os.getenv("FRANCECONNECT_BASE_URL", "http://127.0.0.1:8001").rstrip("/")
     auth_timeout_seconds = float(os.getenv("AUTH_REQUEST_TIMEOUT_SECONDS", "2.5"))
-    bank_api_base_url = os.getenv("BANK_API_BASE_URL", "http://127.0.0.1:8000").rstrip("/")
+    bank_api_base_url = os.getenv("BANK_API_BASE_URL", "http://127.0.0.1:8002").rstrip("/")
     joueur_to_compte: dict[str, int] = {}
 
     def _send_json(self, payload: dict, status: int = HTTPStatus.OK) -> None:
@@ -245,7 +245,7 @@ class MonopolyAPIHandler(BaseHTTPRequestHandler):
             self._send_json({"error": "Erreur interne"}, status=HTTPStatus.INTERNAL_SERVER_ERROR)
 
 
-def run(host: str = "127.0.0.1", port: int = 8000) -> None:
+def run(host: str = "127.0.0.1", port: int = 8003) -> None:
     server = HTTPServer((host, port), MonopolyAPIHandler)
     print(f"API démarrée sur http://{host}:{port}")
     server.serve_forever()

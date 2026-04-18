@@ -13,7 +13,7 @@ python api.py
 ```
 
 L'API sera disponible sur :
-- `http://127.0.0.1:8000`
+- `http://127.0.0.1:8003`
 
 ## Endpoints
 
@@ -29,8 +29,8 @@ L'API sera disponible sur :
 ## Exemples
 
 ```bash
-curl http://127.0.0.1:8000/health
-curl http://127.0.0.1:8000/cards/chance/random
+curl http://127.0.0.1:8003/health
+curl http://127.0.0.1:8003/cards/chance/random
 ```
 
 ## Authentification FranceConnect (MVP SSO)
@@ -40,7 +40,7 @@ Cette API peut protéger toutes les routes métier via un token Bearer issu de `
 Variables d'environnement:
 
 - `SERVICE_AUTH_ENABLED=true`
-- `FRANCECONNECT_BASE_URL=http://127.0.0.1:8000`
+- `FRANCECONNECT_BASE_URL=http://127.0.0.1:8001`
 - `AUTH_REQUEST_TIMEOUT_SECONDS=2.5`
 
 Comportement:
