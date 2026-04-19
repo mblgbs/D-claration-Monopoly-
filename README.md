@@ -2,6 +2,8 @@
 
 API REST simple pour exposer les cartes Monopoly du fichier `declaration_monopoly_cards.json`.
 
+**Écosystème :** `GET http://127.0.0.1:8004/ecosystem` sur [services-Monopoly-](../services-Monopoly-/README.md#decouverte-des-services-ecosystem) liste les URLs (cette API : `8003` en runbook local).
+
 ## Prérequis
 
 - Python 3.10+
@@ -13,7 +15,7 @@ python api.py
 ```
 
 L'API sera disponible sur :
-- `http://127.0.0.1:8003`
+- `http://127.0.0.1:8000`
 
 ## Endpoints
 
@@ -29,25 +31,6 @@ L'API sera disponible sur :
 ## Exemples
 
 ```bash
-curl http://127.0.0.1:8003/health
-curl http://127.0.0.1:8003/cards/chance/random
+curl http://127.0.0.1:8000/health
+curl http://127.0.0.1:8000/cards/chance/random
 ```
-
-## Authentification FranceConnect (MVP SSO)
-
-Cette API peut protéger toutes les routes métier via un token Bearer issu de `FranceConnect-Monopoly`.
-
-Variables d'environnement:
-
-- `SERVICE_AUTH_ENABLED=true`
-- `FRANCECONNECT_BASE_URL=http://127.0.0.1:8001`
-- `BANK_API_BASE_URL=http://127.0.0.1:8002`
-- `PORT=8003`
-- `AUTH_REQUEST_TIMEOUT_SECONDS=2.5`
-
-Comportement:
-
-- `/health` et `/` restent publics
-- les routes `/cards*` et `/taxes` exigent `Authorization: Bearer <token>`
-- token invalide/manquant -> `401`
-- fournisseur d'auth indisponible -> `503`
