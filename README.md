@@ -34,3 +34,9 @@ L'API sera disponible sur :
 curl http://127.0.0.1:8000/health
 curl http://127.0.0.1:8000/cards/chance/random
 ```
+
+## Ecriture et paiements
+
+- Nouveau endpoint: `POST /declarations` (enregistrement declaration + mise a jour solde en memoire).
+- Nouveau endpoint: `POST /payments/link` (proxy vers `services-Monopoly-` pour lien Stripe).
+- Variable d'environnement: `SERVICES_MONOPOLY_BASE_URL` (defaut `http://127.0.0.1:8004`).

@@ -5,6 +5,7 @@ const rows = document.getElementById('rows');
 const emptyState = document.getElementById('empty-state');
 const exportBtn = document.getElementById('export-btn');
 const resetBtn = document.getElementById('reset-btn');
+const paymentLinkArea = document.getElementById('payment-link-area');
 
 let cardData;
 const STORAGE_KEY = 'declaration_app_entries';
@@ -73,6 +74,52 @@ function saveEntries() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
 }
 
+function clearPaymentLinkArea() {
+  paymentLinkArea.innerHTML = '';
+}
+
+function renderPaymentLink(url) {
+  clearPaymentLinkArea();
+  const link = document.createElement('a');
+  link.href = url;
+  link.target = '_blank';
+  link.rel = 'noreferrer';
+  link.textContent = 'Payer impot';
+  paymentLinkArea.appendChild(link);
+}
+
+async function createTaxPaymentLink(entry, operation) {
+  const amountHintCents = Math.round(Number(entry.montant) * 100);
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/payments/link`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        app: 'declaration',
+        context: 'tax',
+        reference_id: entry.referenceId,
+        metadata: {
+          joueur: entry.joueur,
+          montant: entry.montant,
+          operation,
+        },
+        amount_hint_cents: amountHintCents,
+      }),
+    });
+
+    const payload = await response.json();
+    if (!response.ok || typeof payload.url !== 'string' || !payload.url) {
+      clearPaymentLinkArea();
+      return;
+    }
+
+    renderPaymentLink(payload.url);
+  } catch {
+    clearPaymentLinkArea();
+  }
+}
+
 function loadEntries() {
   try {
     const fromStorage = JSON.parse(localStorage.getItem(STORAGE_KEY));
@@ -110,6 +157,7 @@ form.addEventListener('submit', async (event) => {
 
   const data = new FormData(form);
   const entry = {
+    referenceId: `decl-${Date.now()}`,
     date: new Date().toLocaleString('fr-FR'),
     joueur: data.get('joueur'),
     type: data.get('type'),
@@ -136,6 +184,11 @@ form.addEventListener('submit', async (event) => {
       operation: payload.entry.operation,
       solde: payload.bankAccount.solde,
     });
+    if (entry.type === 'impot') {
+      await createTaxPaymentLink(entry, payload.entry.operation);
+    } else {
+      clearPaymentLinkArea();
+    }
     saveEntries();
     renderEntries();
     form.reset();
@@ -162,6 +215,7 @@ resetBtn.addEventListener('click', () => {
   entries = [];
   saveEntries();
   renderEntries();
+  clearPaymentLinkArea();
 });
 
 loadEntries();
